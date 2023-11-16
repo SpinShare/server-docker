@@ -1,0 +1,41 @@
+version: '3.1'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./.docker/Dockerfile
+    volumes:
+      - "./server:/var/www/html"
+    depends_on:
+      - db
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+  db:
+    image: mariadb:10.5
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpw
+      MYSQL_DATABASE: customspeens
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./db:/var/lib/mysql"
+    networks:
+      - app-network
+  phpmyadmin:
+    image: phpmyadmin
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: rootpw
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

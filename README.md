@@ -15,10 +15,14 @@
 ### Run Server
 - ``docker compose up -d``
 
+### Install Composer Dependencies
+- ``docker exec -it server-docker-web-1 bash``
+- ``composer install``
+
 ### Create DB
-- ``docker exec -it spinshare-web-1 bash``
+- ``docker exec -it server-docker-web-1 bash``
 - ``php bin/console doctrine:schema:create``
 
 ### Update DB
-- ``docker exec -it spinshare-web-1 bash``
+- ``docker exec -it server-docker-web-1 bash``
 - ``php bin/console doctrine:schema:update --force``
